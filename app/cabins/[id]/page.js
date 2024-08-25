@@ -11,7 +11,6 @@ export const generateMetadata = async ({ params }) => {
 
 async function page({ params }) {
   const cabin = await getCabin(params.id);
-  console.log("cabin", cabin);
 
   const { id, name, description, regularPrice, discount, maxCapacity, image } =
     cabin;
