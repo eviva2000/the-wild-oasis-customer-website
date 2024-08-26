@@ -10,6 +10,7 @@ const nextConfig = {
       },
     ],
   },
+  out: "export",
 };
 
 export default nextConfig;
