@@ -2,8 +2,6 @@ import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import Image from "next/image";
 
-export const revalidate = 0;
-
 export const generateMetadata = async ({ params }) => {
   const cabin = await getCabin(params.id);
   return {

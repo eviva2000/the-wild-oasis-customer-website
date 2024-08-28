@@ -1,7 +1,10 @@
+import { unstable_noStore as noStore } from "next/cache";
 import CabinCard from "@/app/_components/CabinCard";
 import { getCabins } from "@/app/_lib/data-service";
 
 async function CabinList() {
+  // By calling this function we opt out from data caching. So it s uncached data fetching and it will be rendered dynamically.
+  // noStore();
   const cabins = await getCabins();
 
   if (cabins.length === 0) return null;
