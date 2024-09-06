@@ -5,7 +5,6 @@ export const revalidate = 86400; // revalidate data once a day
 
 export default async function Page() {
   const numCabins = (await getCabins()).length;
-  console.log(numCabins);
 
   return (
     <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
