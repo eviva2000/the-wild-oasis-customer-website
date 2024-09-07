@@ -29,7 +29,7 @@ async function page({ params }) {
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
-      <Cabin />
+      <Cabin cabin={cabin} />
       <div>
         <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
           Reserve {name} today. Pay on arrival.
