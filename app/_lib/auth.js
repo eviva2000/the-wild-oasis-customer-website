@@ -28,7 +28,7 @@ const authConfig = {
     // this call back is for getting the guest id from the database and adding it to the session.
     async session({ session, user }) {
       const guest = await getGuest(session.user.email);
-      session.guestId = guest.id;
+      session.user.guestId = guest.id;
       return session;
     },
   },
