@@ -2,6 +2,7 @@ import Link from "next/link";
 import { auth } from "../_lib/auth";
 export default async function Navigation() {
   const session = await auth(); // using auth makes all the routes dynamic because its dealing with cookies
+  console.log(session.user);
   return (
     <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
