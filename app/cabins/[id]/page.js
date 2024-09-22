@@ -3,6 +3,7 @@ import Spinner from "@/app/_components/Spinner";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { Suspense } from "react";
 import Cabin from "@/app/_components/Cabin";
+
 export const generateMetadata = async ({ params }) => {
   const cabin = await getCabin(params.id);
 
@@ -24,8 +25,7 @@ export async function generateStaticParams() {
 async function page({ params }) {
   const cabin = await getCabin(params.id);
 
-  const { id, name, description, regularPrice, discount, maxCapacity, image } =
-    cabin;
+  const { name } = cabin;
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
