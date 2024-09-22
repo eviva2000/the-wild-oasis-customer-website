@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { getBookings } from "./data-service";
-
+import { RedirectType } from "next/navigation";
+import { redirect } from "next/navigation";
 export async function updateProfile(formData) {
   const session = await auth();
 
@@ -28,10 +29,43 @@ export async function updateProfile(formData) {
   revalidatePath("/account/profile"); // if we use /account all sub-pages of /account will be revalidated but we don't need it here. We only need /account/profile to be revalidated
 }
 
+export async function updateReservation(formData) {
+  // Authentication
+  const session = await auth();
+  if (!session) throw new Error("Not authenticated, please login");
+  // Authorization
+  const bookingId = Number(formData.get("bookingId"));
+  const bookings = await getBookings(session.user.guestId);
+  const bookingIds = bookings.map((booking) => booking.id);
+
+  if (!bookingIds.includes(bookingId)) {
+    throw new Error("You are not authorized to update this booking");
+  }
+
+  // Update data
+  const updateData = {
+    numGuests: formData.get("numGuests"),
+    observations: formData.get("observations").slice(0, 1000),
+  };
+
+  // Mutation
+  const { data, error } = await supabase
+    .from("bookings")
+    .update(updateData)
+    .eq("id", bookingId);
+
+  if (error) throw new Error("Booking could not be updated");
+
+  //Revalidateion and redirecting
+  revalidatePath(`/account/reservations/edit/${bookingId}`);
+  redirect("/account/reservations");
+}
+
 export async function deleteReservation(bookingId) {
   const session = await auth();
   const bookings = await getBookings(session.user.guestId);
   const bookingIds = bookings.map((booking) => booking.id);
+
   // Dont allow user to delete booking that is not his, by doings some hack in the url
   if (!bookingIds.includes(bookingId)) {
     throw new Error("You are not authorized to delete this booking");
