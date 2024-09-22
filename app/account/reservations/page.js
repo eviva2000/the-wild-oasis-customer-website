@@ -1,12 +1,16 @@
 import ReservationCard from "@/app/_components/ReservationCard";
+import { auth } from "@/app/_lib/auth";
+import { getBookings } from "@/app/_lib/data-service";
 
 export const metadata = {
   tilte: "Reservations",
 };
 
-export default function Page() {
+export default async function Page() {
+  const session = await auth();
+  console.log(session.user.guestId);
+  const bookings = await getBookings(session.user.guestId);
   // CHANGE
-  const bookings = [];
 
   return (
     <div>
