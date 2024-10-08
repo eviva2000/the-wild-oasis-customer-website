@@ -1,5 +1,11 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 
 const ReservationContext = createContext();
 
@@ -8,13 +14,18 @@ const initialState = {
   to: undefined,
 };
 
-function ReservationPrivider({ children }) {
-  const [range, setrange] = useState(initialState);
+function ReservationProvider({ children }) {
+  const [range, setRange] = useState(initialState);
 
-  const resetRange = () => setrange(initialState);
+  const resetRange = useCallback(() => setRange(initialState), [setRange]);
+
+  const value = useMemo(
+    () => ({ range, setRange, resetRange }),
+    [range, setRange, resetRange]
+  );
 
   return (
-    <ReservationContext.Provider value={{ range, setrange, resetRange }}>
+    <ReservationContext.Provider value={value}>
       {children}
     </ReservationContext.Provider>
   );
@@ -28,4 +39,4 @@ function useReservation() {
   return context;
 }
 
-export { ReservationPrivider, useReservation };
+export { ReservationProvider, useReservation };
