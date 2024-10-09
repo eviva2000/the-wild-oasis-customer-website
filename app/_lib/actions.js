@@ -29,6 +29,37 @@ export async function updateProfile(formData) {
   revalidatePath("/account/profile"); // if we use /account all sub-pages of /account will be revalidated but we don't need it here. We only need /account/profile to be revalidated
 }
 
+export async function createReservation(initialBookingData, formData) {
+  const session = await auth();
+  if (!session) throw new Error("Not authenticated, please login");
+
+  // if we had many fields in in the form then instead of doing formData.get('') for each of them we wcould use the following code:
+  // Object.entries(FormData.entry()).reduce((acc, [key, value]) => ({...acc, [key]: value}), {})
+
+  const x = Object.entries(formData.entries()).reduce(
+    (acc, [key, value]) => ({ ...acc, [key]: value }),
+    {}
+  );
+
+  const bookingData = {
+    ...initialBookingData,
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations").slice(0, 1000),
+    guestId: session.user.guestId,
+    extrasPrice: 0,
+    totalPrice: initialBookingData.cabinPrice,
+    isPaid: false,
+    hasBreakfast: false,
+    status: "unconfirmed",
+  };
+
+  const { error } = await supabase.from("bookings").insert([bookingData]);
+
+  if (error) throw new Error("Booking could not be created");
+  revalidatePath(`/cabins/${initialBookingData.cabinId}`);
+  redirect("/cabins/thankyou");
+}
+
 export async function updateReservation(formData) {
   // Authentication
   const session = await auth();

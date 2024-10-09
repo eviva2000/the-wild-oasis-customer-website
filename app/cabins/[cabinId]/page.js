@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import Cabin from "@/app/_components/Cabin";
 
 export const generateMetadata = async ({ params }) => {
-  const cabin = await getCabin(params.id);
+  const cabin = await getCabin(params.cabinId);
 
   return {
     title: `Cabin ${cabin.name}`,
@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 }
 
 async function page({ params }) {
-  const cabin = await getCabin(params.id);
+  const cabin = await getCabin(params.cabinId);
 
   const { name } = cabin;
 
