@@ -10,7 +10,7 @@ function CabinCard({ cabin }) {
       <div className="flex-1 relative">
         <Image
           fill
-          src={image}
+          src={image ?? null}
           alt={`Cabin ${name}`}
           className=" object-cover border-r border-primary-800"
         />

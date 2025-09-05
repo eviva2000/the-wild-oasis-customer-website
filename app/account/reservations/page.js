@@ -14,14 +14,14 @@ export default async function Page() {
 
   return (
     <div>
-      <h2 className="font-semibold text-2xl text-accent-400 mb-7">
+      <h2 className="font-semibold text-xl lg:text-2xl text-accent-400 mb-4 lg:mb-7">
         Your reservations
       </h2>
 
       {bookings.length === 0 ? (
-        <p className="text-lg">
+        <p className="text-base lg:text-lg text-primary-200 leading-relaxed">
           You have no reservations yet. Check out our{" "}
-          <a className="underline text-accent-500" href="/cabins">
+          <a className="underline text-accent-500 hover:text-accent-400 transition-colors" href="/cabins">
             luxury cabins &rarr;
           </a>
         </p>

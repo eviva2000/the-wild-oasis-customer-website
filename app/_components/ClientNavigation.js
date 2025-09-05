@@ -1,10 +1,13 @@
+"use client";
+
 import Link from "next/link";
-import { auth } from "../_lib/auth";
-import Image from "next/image";
-export default async function Navigation() {
-  const session = await auth(); // using auth makes all the routes dynamic because its dealing with cookies
+import { useSession } from "next-auth/react";
+
+export default function ClientNavigation() {
+  const { data: session } = useSession();
+  
   return (
-    <nav className="z-10 text-xl hidden md:block">
+    <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
         <li>
           <Link
@@ -28,11 +31,11 @@ export default async function Navigation() {
               href="/account"
               className="hover:text-accent-400 transition-colors flex items-center gap-4"
             >
-              <Image
+              <img
                 className="h-8 rounded-full"
                 src={session?.user?.image}
                 alt="avatar"
-                refferrerpolicy="no-referrer"
+                referrerPolicy="no-referrer"
               />
               <span> Guest area</span>
             </Link>

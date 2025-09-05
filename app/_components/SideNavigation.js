@@ -8,6 +8,7 @@ import {
 import Link from "next/link";
 import SignOutButton from "./SignOutButto";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   {
@@ -29,26 +30,31 @@ const navLinks = [
 
 function SideNavigation() {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
-    <nav className="border-r border-primary-900">
-      <ul className="flex flex-col gap-2 h-full text-lg">
+    <nav className="border-r lg:border-r border-b lg:border-b-0 border-primary-900">
+      <ul className="flex lg:flex-col gap-2 lg:h-full text-base lg:text-lg overflow-x-auto lg:overflow-x-visible">
         {navLinks.map((link) => (
-          <li key={link.name}>
+          <li key={link.name} className="flex-shrink-0 lg:flex-shrink">
             <Link
-              className={`py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 ${
-                link.href === pathname ? "bg-primary-900 text-primary-100" : ""
+              className={`py-2 lg:py-3 px-3 lg:px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-2 lg:gap-4 font-semibold text-primary-200 whitespace-nowrap ${
+                mounted && link.href === pathname ? "bg-primary-900 text-primary-100" : ""
               }`}
               href={link.href}
             >
               {link.icon}
-              <span>{link.name}</span>
+              <span className="hidden sm:inline lg:inline">{link.name}</span>
             </Link>
           </li>
         ))}
 
-        <li className="mt-auto">
-          <SignOutButton />{" "}
+        <li className="lg:mt-auto flex-shrink-0 lg:flex-shrink">
+          <SignOutButton />
         </li>
       </ul>
     </nav>
