@@ -4,10 +4,15 @@ import DeleteReservation from "./DeleteReservation";
 import Image from "next/image";
 import Link from "next/link";
 
-export const formatDistanceFromNow = (dateStr) =>
-  formatDistance(parseISO(dateStr), new Date(), {
-    addSuffix: true,
-  }).replace("about ", "");
+export const formatDistanceFromNow = (dateStr) => {
+  try {
+    return formatDistance(parseISO(dateStr), new Date(), {
+      addSuffix: true,
+    }).replace("about ", "");
+  } catch {
+    return "Soon";
+  }
+};
 
 function ReservationCard({ booking }) {
   const {
@@ -54,11 +59,7 @@ function ReservationCard({ booking }) {
           </h3>
 
           <p className="text-sm text-primary-300 leading-relaxed">
-            {format(new Date(startDate), "EEE, MMM dd yyyy")} (
-            {isToday(new Date(startDate))
-              ? "Today"
-              : formatDistanceFromNow(startDate)}
-            ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
+            {format(new Date(startDate), "EEE, MMM dd yyyy")} &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
           </p>
 
           <div className="flex flex-wrap gap-3 items-center">
@@ -72,7 +73,7 @@ function ReservationCard({ booking }) {
           </div>
 
           <p className="text-xs text-primary-400">
-            Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}
+            Booked {format(new Date(created_at), "EEE, MMM dd yyyy")}
           </p>
 
           {!isPast(startDate) && (
@@ -121,11 +122,7 @@ function ReservationCard({ booking }) {
           </div>
 
           <p className="text-lg text-primary-300">
-            {format(new Date(startDate), "EEE, MMM dd yyyy")} (
-            {isToday(new Date(startDate))
-              ? "Today"
-              : formatDistanceFromNow(startDate)}
-            ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
+            {format(new Date(startDate), "EEE, MMM dd yyyy")} &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
           </p>
 
           <div className="flex gap-5 mt-auto items-baseline">
@@ -137,7 +134,7 @@ function ReservationCard({ booking }) {
               {numGuests} guest{numGuests > 1 && "s"}
             </p>
             <p className="ml-auto text-sm text-primary-400">
-              Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}
+              Booked {format(new Date(created_at), "EEE, MMM dd yyyy")}
             </p>
           </div>
         </div>
