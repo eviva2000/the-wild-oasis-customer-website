@@ -32,6 +32,7 @@ function ReservationCard({ booking }) {
             src={image}
             alt={`Cabin ${name}`}
             fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
           />
           <div className="absolute top-3 right-3">
@@ -46,12 +47,12 @@ function ReservationCard({ booking }) {
             )}
           </div>
         </div>
-        
+
         <div className="p-4 space-y-3">
           <h3 className="text-lg font-semibold">
             {numNights} nights in Cabin {name}
           </h3>
-          
+
           <p className="text-sm text-primary-300 leading-relaxed">
             {format(new Date(startDate), "EEE, MMM dd yyyy")} (
             {isToday(new Date(startDate))
@@ -61,13 +62,15 @@ function ReservationCard({ booking }) {
           </p>
 
           <div className="flex flex-wrap gap-3 items-center">
-            <p className="text-lg font-semibold text-accent-400">${totalPrice}</p>
+            <p className="text-lg font-semibold text-accent-400">
+              ${totalPrice}
+            </p>
             <p className="text-primary-300">&bull;</p>
             <p className="text-sm text-primary-300">
               {numGuests} guest{numGuests > 1 && "s"}
             </p>
           </div>
-          
+
           <p className="text-xs text-primary-400">
             Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}
           </p>
@@ -96,6 +99,7 @@ function ReservationCard({ booking }) {
             src={image}
             alt={`Cabin ${name}`}
             fill
+            sizes="128px"
             className="object-cover border-r border-primary-800"
           />
         </div>
@@ -125,7 +129,9 @@ function ReservationCard({ booking }) {
           </p>
 
           <div className="flex gap-5 mt-auto items-baseline">
-            <p className="text-xl font-semibold text-accent-400">${totalPrice}</p>
+            <p className="text-xl font-semibold text-accent-400">
+              ${totalPrice}
+            </p>
             <p className="text-primary-300">&bull;</p>
             <p className="text-lg text-primary-300">
               {numGuests} guest{numGuests > 1 && "s"}

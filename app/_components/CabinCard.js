@@ -2,7 +2,7 @@ import { UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 
-function CabinCard({ cabin }) {
+function CabinCard({ cabin, priority = false }) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
 
   return (
@@ -10,6 +10,8 @@ function CabinCard({ cabin }) {
       <div className="flex-1 relative">
         <Image
           fill
+          priority={priority}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           src={image ?? null}
           alt={`Cabin ${name}`}
           className=" object-cover border-r border-primary-800"

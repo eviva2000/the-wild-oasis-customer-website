@@ -12,6 +12,8 @@ function Cabin({ cabin }) {
           src={image}
           alt={`Cabin ${name}`}
           fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 60vw"
           className="object-cover rounded-lg lg:rounded-none"
         />
       </div>

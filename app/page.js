@@ -8,6 +8,8 @@ export default function Page() {
       <Image
         src={bg}
         fill
+        priority
+        sizes="100vw"
         placeholder="blur"
         quality={80}
         alt="Mountains and forests with two cabins"
