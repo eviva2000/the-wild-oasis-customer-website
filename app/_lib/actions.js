@@ -6,7 +6,7 @@ import { supabase } from "./supabase";
 import { getBookings } from "./data-service";
 import { redirect } from "next/navigation";
 
-export async function updateProfile(formData) {
+export async function updateProfile(prevState, formData) {
   const session = await auth();
 
   // In server actions we dont use try catch block
@@ -17,16 +17,22 @@ export async function updateProfile(formData) {
   const nationalIdPattern = /^[a-zA-Z0-9]{6,12}$/;
 
   if (!nationalIdPattern.test(nationalID))
-    throw new Error("Invalid national ID");
+    return {
+      error: "Please provide a valid national ID (6–12 letters or numbers).",
+    };
+
   const updateData = { nationalID, nationality, countryFlag };
   const { data, error } = await supabase
     .from("guests")
     .update(updateData)
-    .eq("id", session.user.guestId);
+    .eq("id", session.user.guestId)
+    .select();
 
-  if (error) throw new Error("Guest could not be updated");
+  if (error || !data?.length) return { error: "Guest could not be updated." };
   //built-in function in Next.js to revalidate the data
   revalidatePath("/account/profile"); // if we use /account all sub-pages of /account will be revalidated but we don't need it here. We only need /account/profile to be revalidated
+
+  return { success: true };
 }
 
 export async function createReservation(initialBookingData, formData) {

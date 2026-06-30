@@ -1,13 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useActionState } from "react";
 import { updateProfile } from "../_lib/actions";
 import SubmitButton from "./SubmitButton";
 function UpdateProfileForm({ children, guest }) {
   const { fullName, email, nationality, countryFlag, nationalID } = guest;
+  const [state, formAction] = useActionState(updateProfile, {});
   return (
     <div>
       <form
-        action={updateProfile}
+        action={formAction}
         className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
       >
         <div className="space-y-2">
@@ -49,6 +50,9 @@ function UpdateProfileForm({ children, guest }) {
             name="nationalID"
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
           />
+          {state?.error && (
+            <p className="text-sm text-red-400">{state.error}</p>
+          )}
         </div>
 
         <div className="flex justify-end items-center gap-6">
