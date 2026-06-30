@@ -29,10 +29,19 @@
   }
 }
 
-/* For data picker */
-.rdp {
-  --rdp-cell-size: 32px !important;
-  --rdp-accent-color: theme("colors.accent.500") !important;
-  --rdp-background-color: theme("colors.accent.600") !important;
+/* For date picker */
+.rdp-root {
+  --rdp-day-height: 32px !important;
+  --rdp-day-width: 32px !important;
+  --rdp-day_button-height: 32px !important;
+  --rdp-day_button-width: 32px !important;
+  --rdp-accent-color: theme("colors.accent.600") !important;
+  --rdp-accent-background-color: theme("colors.accent.100") !important;
+  --rdp-range_start-date-background-color: theme("colors.accent.600") !important;
+  --rdp-range_middle-background-color: theme("colors.accent.100") !important;
+  --rdp-range_middle-color: theme("colors.primary.900") !important;
+  --rdp-range_end-date-background-color: theme("colors.accent.600") !important;
+  --rdp-selected-border: 2px solid theme("colors.accent.600") !important;
+  --rdp-today-color: theme("colors.accent.600") !important;
   margin: 0 !important;
 }

@@ -51,29 +51,33 @@ function DateSelector({ settings, bookedDates, cabin }) {
         }
       />
 
-      <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
-        <div className="flex items-baseline gap-6">
+      <div className="flex min-h-[72px] flex-col gap-3 bg-accent-500 px-4 py-4 text-primary-800 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="flex w-full flex-wrap items-center gap-x-4 gap-y-2 sm:w-auto sm:gap-6">
           <p className="flex gap-2 items-baseline">
             {discount > 0 ? (
               <>
-                <span className="text-2xl">${regularPrice - discount}</span>
+                <span className="text-xl sm:text-2xl">
+                  ${regularPrice - discount}
+                </span>
                 <span className="line-through font-semibold text-primary-700">
                   ${regularPrice}
                 </span>
               </>
             ) : (
-              <span className="text-2xl">${regularPrice}</span>
+              <span className="text-xl sm:text-2xl">${regularPrice}</span>
             )}
             <span className="">/night</span>
           </p>
           {numNights ? (
             <>
-              <p className="bg-accent-600 px-3 py-2 text-2xl">
+              <p className="bg-accent-600 px-3 py-2 text-xl sm:text-2xl">
                 <span>&times;</span> <span>{numNights}</span>
               </p>
               <p>
                 <span className="text-lg font-bold uppercase">Total</span>{" "}
-                <span className="text-2xl font-semibold">${cabinPrice}</span>
+                <span className="text-xl font-semibold sm:text-2xl">
+                  ${cabinPrice}
+                </span>
               </p>
             </>
           ) : null}
@@ -81,7 +85,7 @@ function DateSelector({ settings, bookedDates, cabin }) {
 
         {range.from || range.to ? (
           <button
-            className="border border-primary-800 py-2 px-4 text-sm font-semibold"
+            className="w-fit shrink-0 self-end border border-primary-800 px-4 py-2 text-sm font-semibold sm:self-auto"
             onClick={resetRange}
           >
             Clear
